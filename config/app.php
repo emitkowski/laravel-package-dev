@@ -159,7 +159,7 @@ return [
         /*
         * Package Service Providers
         */
-        'Pigeon\PigeonServiceProvider',
+        'Larablocks\Pigeon\PigeonServiceProvider',
 	],
 
 	/*
@@ -214,7 +214,7 @@ return [
 
         // Custom Aliases
         'Logger' => 'App\Facades\LoggerFacade',
-        'Pigeon' => 'Pigeon\Pigeon'
+        'Pigeon' => 'Larablocks\Pigeon\Pigeon'
 
 	],
 

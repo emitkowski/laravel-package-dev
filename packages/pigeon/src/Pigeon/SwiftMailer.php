@@ -1,4 +1,4 @@
-<?php namespace Pigeon;
+<?php namespace Larablocks\Pigeon;
 
 use ErrorException;
 use Illuminate\Support\Facades\Log;

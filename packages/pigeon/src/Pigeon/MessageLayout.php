@@ -1,4 +1,4 @@
-<?php namespace Pigeon;
+<?php namespace Larablocks\Pigeon;
 
 /**
  * Class MessageLayout
