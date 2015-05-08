@@ -4,7 +4,6 @@ use ErrorException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
-
 /**
  * Class SwiftMailer
  * @package Pigeon
@@ -141,8 +140,12 @@ class SwiftMailer extends MessageAbstract implements PigeonInterface
      */
     public function pretend($value = true)
     {
-       $this->pretend = $value;
+        if (!is_bool($value)) {
+           return false;
+        }
 
-       return $this;
+        $this->pretend = $value;
+
+        return $this;
     }
 }

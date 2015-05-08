@@ -1,5 +1,6 @@
 <?php namespace Larablocks\Pigeon;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -11,6 +12,16 @@ use Illuminate\Support\Facades\Log;
  */
 abstract class MessageAbstract
 {
+    /**
+     * Constant representing path to defaults definition in config file.
+     */
+    const DEFAULT_CONFIG_PATH = 'pigeon.default';
+
+    /**
+     * Constant representing path to message types definitions in config file.
+     */
+    const DEFAULT_CONFIG_MESSAGE_TYPE_PATH = 'pigeon.message_types';
+
     /**
      * Message Layout instance
      *
@@ -71,20 +82,25 @@ abstract class MessageAbstract
     public function __construct(MessageLayout $message_layout)
     {
         $this->message_layout = $message_layout;
-        $this->setDefaultConfigs();
+
+        try {
+            $this->loadConfigType('default');
+        } catch (InvalidMessageTypeException $e) {
+            Log::error($e->message());
+        }
     }
 
 
     /**
      * Set Message Type
      *
-     * @param $message_type (config string)
+     * @param $message_type (set in config file)
      * @return $this
      */
     public function type($message_type)
     {
         try {
-            $this->processMessageTypeConfigs($message_type);
+            $this->loadConfigType($message_type);
         } catch (InvalidMessageTypeException $e) {
             Log::error($e->message());
         }
@@ -145,6 +161,8 @@ abstract class MessageAbstract
             array_push($this->to, $address);
         }
 
+        $this->to = array_unique($this->to);
+
         return $this;
     }
 
@@ -175,6 +193,8 @@ abstract class MessageAbstract
             array_push($this->cc, $address);
         }
 
+        $this->cc = array_unique($this->cc);
+
         return $this;
     }
 
@@ -191,6 +211,8 @@ abstract class MessageAbstract
         } else {
             array_push($this->bcc, $address);
         }
+
+        $this->bcc = array_unique($this->bcc);
 
         return $this;
     }
@@ -275,95 +297,83 @@ abstract class MessageAbstract
         return true;
     }
 
-    /**
-     * Set Default Configuration for Message
-     *
-     * @throws UnknownMessageTypeException
-     */
-    private function setDefaultConfigs()
-    {
-        $config_string = 'pigeon.default';
-
-        $message_config = config($config_string);
-
-        if (is_null($message_config)) {
-            throw new UnknownMessageTypeException('default');
-        }
-
-        $this->setConfigOptions($config_string);
-    }
-
 
     /**
-     * Check the configs for message type and then assign if valid
+     * Load the config type passed from configuration file
      *
-     * @param $message_type
+     * @param $config_type
+     * @return bool
      * @throws InvalidMessageTypeException
      * @throws UnknownMessageTypeException
      */
-    private function processMessageTypeConfigs($message_type)
+    private function loadConfigType($config_type)
     {
-        $config_string = 'pigeon.message_types.'.$message_type;
-
-        $message_config = config($config_string);
-
-        if (is_null($message_config)) {
-            throw new UnknownMessageTypeException($message_type);
+        // Get Path for config
+        if ($config_type === 'default') {
+            $config_path = self::DEFAULT_CONFIG_PATH;
+        } else {
+            $config_path = self::DEFAULT_CONFIG_MESSAGE_TYPE_PATH.'.'.$config_type;
         }
 
-        if (!is_array($message_config)) {
-            throw new InvalidMessageTypeException($message_type);
+        $config_array = config($config_path);
+
+        if (is_null($config_array)) {
+            throw new UnknownMessageTypeException('Pigeon config not found for type: '.$config_type);
         }
 
-        if($this->setConfigOptions($config_string)) {
-            $this->message_type = $message_type;
+        if (!is_array($config_array)) {
+            throw new InvalidMessageTypeException('Pigeon config not set up properly for type: '.$config_type);
         }
+
+        if($this->setConfigOptions($config_array)) {
+            $this->message_type = $config_type;
+        }
+
+        return true;
 
     }
 
     /**
      * Set Configuration Options
      *
-     * @param $config_string
+     * @param array $config_array
      * @return bool
      */
-    private function setConfigOptions($config_string)
+    private function setConfigOptions(array $config_array)
     {
-        $subject_config = config($config_string.'.subject');
-        if (isset($subject_config)) {
-            $this->subject($subject_config);
-        }
-
-        $layout_config = config($config_string.'.layout');
-        if (isset($layout_config)) {
-            $this->layout($layout_config);
-        }
-
-        $template_config = config($config_string.'.template');
-        if (isset($template_config)) {
-            $this->template($template_config);
-        }
-
-        $to_config = config($config_string.'.to');
-        if (isset($to_config)) {
-            $this->to($to_config);
-        }
-
-        $cc_config = config($config_string.'.cc');
-        if (isset($cc_config)) {
-            $this->cc($cc_config);
-        }
-
-        $bcc_config = config($config_string.'.bcc');
-        if (isset($bcc_config)) {
-            $this->bcc($bcc_config);
-        }
-
-        $message_variables_config = config($config_string.'.message_variables');
-        if (isset($message_variables_config)) {
-            $this->pass($message_variables_config);
+        foreach ($config_array as $type => $value) {
+            $this->setConfigOption($type, $value);
         }
 
         return true;
+    }
+
+    /**
+     * Set Specific Config Option
+     *
+     * @param $option_type
+     * @param $option_value
+     * @return bool
+     */
+    private function setConfigOption($option_type, $option_value)
+    {
+        if (!method_exists($this, $option_type)) {
+            Log::warning('Pigeon Invalid Configuration Option '.$option_type);
+            return false;
+        }
+
+        $this->$option_type($option_value);
+
+        return true;
+    }
+
+    /**
+     * Function to allow message variables in config to point to the pass() function for variables
+     *
+     * @param $message_variables
+     */
+    private function message_variables($message_variables)
+    {
+        $this->pass($message_variables);
     }
 }
