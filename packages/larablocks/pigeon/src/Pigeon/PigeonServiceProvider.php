@@ -21,7 +21,7 @@ class PigeonServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        require __DIR__ . '/../../../../vendor/autoload.php';
+        require __DIR__ . '/../../../../../vendor/autoload.php';
 
         $this->publishes([
             __DIR__.'/../config/pigeon.php' => config_path('pigeon.php'),

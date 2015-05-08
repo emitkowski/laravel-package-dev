@@ -20,7 +20,7 @@
 		],
 		"psr-4": {
 			"App\\": "app/",
-            "Larablocks\\Pigeon\\": "packages/pigeon/src/Pigeon"
+            "Larablocks\\Pigeon\\": "packages/larablocks/pigeon/src/Pigeon"
 		}
 	},
 	"autoload-dev": {
