@@ -1,6 +1,6 @@
 <?php namespace Larablocks\Pigeon;
 
-use Illuminate\Support\Facades\Config;
+use Illuminate\Config\Repository as Config;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -21,6 +21,13 @@ abstract class MessageAbstract
      * Constant representing path to message types definitions in config file.
      */
     const DEFAULT_CONFIG_MESSAGE_TYPE_PATH = 'pigeon.message_types';
+
+    /**
+     * Config instance
+     *
+     * @Illuminate\Support\Facades\Config
+     */
+    protected $config;
 
     /**
      * Message Layout instance
@@ -78,15 +85,18 @@ abstract class MessageAbstract
      * Swift Mailer Abstract Constructor
      *
      * @param MessageLayout $message_layout
+     * @param Config $config
+     * @throws UnknownMessageTypeException
      */
-    public function __construct(MessageLayout $message_layout)
+    public function __construct(MessageLayout $message_layout, Config $config)
     {
         $this->message_layout = $message_layout;
+        $this->config = $config;
 
         try {
             $this->loadConfigType('default');
         } catch (InvalidMessageTypeException $e) {
-            Log::error($e->message());
+            //Log::error($e->message());
         }
     }
 
@@ -102,7 +112,7 @@ abstract class MessageAbstract
         try {
             $this->loadConfigType($message_type);
         } catch (InvalidMessageTypeException $e) {
-            Log::error($e->message());
+            //Log::error($e->message());
         }
 
         return $this;
@@ -268,7 +278,7 @@ abstract class MessageAbstract
     protected function subjectWarning()
     {
         if (empty($this->subject) || $this->subject === '') {
-            Log::warning('Pigeon sent a message without a subject.');
+            //Log::warning('Pigeon sent a message without a subject.');
         }
     }
 
@@ -315,7 +325,7 @@ abstract class MessageAbstract
             $config_path = self::DEFAULT_CONFIG_MESSAGE_TYPE_PATH.'.'.$config_type;
         }
 
-        $config_array = config($config_path);
+        $config_array = $this->config->get($config_path);
 
         if (is_null($config_array)) {
             throw new UnknownMessageTypeException('Pigeon config not found for type: '.$config_type);
@@ -358,7 +368,7 @@ abstract class MessageAbstract
     private function setConfigOption($option_type, $option_value)
     {
         if (!method_exists($this, $option_type)) {
-            Log::warning('Pigeon Invalid Configuration Option '.$option_type);
+            //Log::warning('Pigeon Invalid Configuration Option '.$option_type);
             return false;
         }
 

@@ -1,5 +1,6 @@
 <?php namespace Larablocks\Pigeon;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -17,6 +18,12 @@ class PigeonServiceProvider extends ServiceProvider
 
         // Bind the Pigeon Interface to the facade
         $this->app->bind('pigeon', 'Larablocks\Pigeon\PigeonInterface');
+
+        // Load Pigeon alias for the user if not set in app.php
+        $aliases = config('app.aliases');
+        if (empty($aliases['Pigeon'])) {
+            AliasLoader::getInstance()->alias('Pigeon', 'Larablocks\Pigeon\Pigeon');
+        }
     }
 
     public function boot()

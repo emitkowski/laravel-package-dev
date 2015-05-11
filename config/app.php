@@ -213,8 +213,8 @@ return [
         'HTML'=> 'Illuminate\Html\HtmlFacade',
 
         // Custom Aliases
-        'Logger' => 'App\Facades\LoggerFacade',
-        'Pigeon' => 'Larablocks\Pigeon\Pigeon'
+        'Logger' => 'App\Facades\LoggerFacade'
+
 
 	],
 

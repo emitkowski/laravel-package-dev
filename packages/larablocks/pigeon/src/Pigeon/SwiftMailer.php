@@ -1,8 +1,9 @@
 <?php namespace Larablocks\Pigeon;
 
 use ErrorException;
+use Illuminate\Config\Repository as Config;
+use Illuminate\Mail\Mailer;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 /**
  * Class SwiftMailer
@@ -13,6 +14,12 @@ use Illuminate\Support\Facades\Mail;
  */
 class SwiftMailer extends MessageAbstract implements PigeonInterface
 {
+    /**
+     * Mailer instance
+     *
+     * @Illuminate\Support\Facades\Mail
+     */
+    private $mailer;
 
     /**
      * Pretend On/Off
@@ -25,10 +32,14 @@ class SwiftMailer extends MessageAbstract implements PigeonInterface
      * Swift Mailer Constructor
      *
      * @param MessageLayout $message_layout
+     * @param Mailer $mailer
+     * @param Config $config
      */
-    public function __construct(MessageLayout $message_layout)
+    public function __construct(Mailer $mailer, MessageLayout $message_layout, Config $config)
     {
-        parent::__construct($message_layout);
+        $this->mailer = $mailer;
+
+        parent::__construct($message_layout, $config);
     }
 
     /**
@@ -40,7 +51,7 @@ class SwiftMailer extends MessageAbstract implements PigeonInterface
     public function send($raw_message = null)
     {
         // Set pretend value
-        Mail::pretend($this->pretend);
+        $this->mailer->pretend($this->pretend);
 
         // Set Optional Message Data
         if (!is_null($raw_message)) {
@@ -50,7 +61,7 @@ class SwiftMailer extends MessageAbstract implements PigeonInterface
         }
 
         // Turn pretend back to global config after send
-        Mail::pretend(config('mail.pretend'));
+        $this->mailer->pretend($this->config->get('mail.pretend'));
 
         return $send_result;
     }
@@ -64,7 +75,7 @@ class SwiftMailer extends MessageAbstract implements PigeonInterface
     private function sendMessage()
     {
         try {
-            Mail::send($this->message_layout->getViewLayout(), $this->message_layout->getMessageVariables(), function ($message) {
+            $send_result = $this->mailer->send($this->message_layout->getViewLayout(), $this->message_layout->getMessageVariables(), function ($message) {
 
                 // Set message parts
                 $message->to($this->to)
@@ -76,20 +87,19 @@ class SwiftMailer extends MessageAbstract implements PigeonInterface
                 foreach ($this->attachments as $a) {
                     $message->attach($a['path'], $a['options']);
                 }
-
-                $this->subjectWarning();
             });
+
         } catch (ErrorException $e) {
             $msg = 'SwiftMail could not send message: ' . $e->getMessage();
-            Log::error($msg);
+            //Log::error($msg);
             return false;
         } catch (\Swift_TransportException $e) {
             $msg = 'SwiftMail SMTP is not working: ' . $e->getMessage();
-            Log::error($msg);
+           // Log::error($msg);
             return false;
         }
 
-        return true;
+        return $send_result;
     }
 
 
@@ -102,7 +112,7 @@ class SwiftMailer extends MessageAbstract implements PigeonInterface
     private function sendRawMessage($message)
     {
         try {
-            Mail::raw($message, function ($message) {
+            $send_result = $this->mailer->raw($message, function ($message) {
 
                 // Set message parts
                 $message->to($this->to)
@@ -114,22 +124,18 @@ class SwiftMailer extends MessageAbstract implements PigeonInterface
                 foreach ($this->attachments as $a) {
                     $message->attach($a['path'], $a['options']);
                 }
-
-                $this->subjectWarning();
             });
         } catch (ErrorException $e) {
             $msg = 'SwiftMail could not send message: ' . $e->getMessage();
-            dd($msg);
-            Log::error($msg);
+            //Log::error($msg);
             return false;
         } catch (\Swift_TransportException $e) {
             $msg = 'SwiftMail SMTP is not working: ' . $e->getMessage();
-            dd($msg);
-            Log::error($msg);
+           // Log::error($msg);
             return false;
         }
 
-        return true;
+        return $send_result;
     }
 
     /**

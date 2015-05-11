@@ -29,18 +29,11 @@ Then, add a Facade for more convenient usage. In your `app.php` config file add 
 ```php
 'Pigeon' => 'Larablocks\Pigeon\Pigeon',
 ```
+Note: The facade will still load automatically if you wish to not add it to your `app.php`.
 
 To publish the default config file to `config/pigeon.php` use the artisan command `vendor:publish --vendor=""`.
 
-#### Facade
 
-The facade now has the exact same methods as the `Aloha\Twilio\TwilioInterface`.
-One extra feature is that you can define which settings (and which sender phone number) to use:
-
-```php
-Twilio::from('callcenter')->message($user->phone, $message);
-Twilio::from('board_room')->message($boss->phone, 'Hi there boss!');
-```
 
 Define multiple entries in your `twilio` config to make use of this feature.
 
@@ -86,4 +79,4 @@ print $twiml;
 
 ### License
 
-laravel-twilio is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+Pigeon is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

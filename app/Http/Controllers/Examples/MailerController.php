@@ -30,9 +30,9 @@ class MailerController extends Controller
 
         //xr($result);
 
-        Pigeon::type('customer_welcome')->to('emitz13@gmail.com')->pass($message_data)->send();
+        //Pigeon::type('customer_welcome')->to('emitz13@gmail.com')->pass($message_data)->send();
 
-        Pigeon::to('emitz13@gmail.com')->send();
+        Pigeon::to('emitz13@gmail.com')->send('test');
 
         er('Mail Sent');
     }
