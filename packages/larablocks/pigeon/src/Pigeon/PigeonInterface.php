@@ -11,12 +11,20 @@ interface PigeonInterface
 {
 
     /**
+     * Start New Message
+     *
+     * @param $message_type
+     * @return object
+     */
+    public function start($message_type = null);
+
+    /**
      * Set Message Type
      *
      * @param $message_type
      * @return object
      */
-    public function type($message_type);
+    public function load($message_type);
 
     /**
      * Get Message Type

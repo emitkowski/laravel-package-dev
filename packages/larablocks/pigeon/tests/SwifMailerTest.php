@@ -40,7 +40,7 @@ class SwiftMailerTest extends PHPUnit_Framework_TestCase
     {
         $mailer = m::mock('Illuminate\Mail\Mailer');
         $mailer->shouldReceive('pretend')->twice()->andReturn(true);
-        $mailer->shouldReceive('send')->once()->withAnyArgs()->andReturn(true);
+        $mailer->shouldReceive('send')->once()->andReturn(true);
 
         $layout = m::mock('Larablocks\Pigeon\MessageLayout');
         $layout->shouldReceive('getViewLayout')->once()->andReturn('emails.layouts.default');
@@ -67,7 +67,7 @@ class SwiftMailerTest extends PHPUnit_Framework_TestCase
     {
         $mailer = m::mock('Illuminate\Mail\Mailer');
         $mailer->shouldReceive('pretend')->twice()->andReturn(true);
-        $mailer->shouldReceive('raw')->once()->withAnyArgs()->andReturn(true);
+        $mailer->shouldReceive('raw')->once()->andReturn(true);
 
         $layout = m::mock('Larablocks\Pigeon\MessageLayout');
 
@@ -141,8 +141,8 @@ class SwiftMailerTest extends PHPUnit_Framework_TestCase
 
         $swiftmailer = new SwiftMailer($mailer, $layout, $config);
 
-        $this->assertEquals($swiftmailer, $swiftmailer->type('test_type'));
-        $this->assertEquals('test_type', $swiftmailer->getType());
+        $this->assertEquals($swiftmailer, $swiftmailer->type('custom'));
+        $this->assertEquals('custom', $swiftmailer->getType());
 
     }
 }

@@ -142,7 +142,7 @@ class SwiftMailer extends MessageAbstract implements PigeonInterface
      * Use Laravel pretend method and send mail to log file instead
      *
      * @param bool $value
-     * @return PigeonAbstract
+     * @return SwiftMailer
      */
     public function pretend($value = true)
     {

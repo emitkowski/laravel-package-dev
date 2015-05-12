@@ -93,27 +93,40 @@ abstract class MessageAbstract
         $this->message_layout = $message_layout;
         $this->config = $config;
 
-        try {
-            $this->loadConfigType('default');
-        } catch (InvalidMessageTypeException $e) {
-            //Log::error($e->message());
-        }
+        $this->loadConfigType('default');
     }
 
-
     /**
-     * Set Message Type
+     * Start New Message
      *
      * @param $message_type (set in config file)
      * @return $this
      */
-    public function type($message_type)
+    public function start($message_type = null)
     {
-        try {
-            $this->loadConfigType($message_type);
-        } catch (InvalidMessageTypeException $e) {
-            //Log::error($e->message());
+        // First reset message
+        $this->resetMessage();
+
+        // Assign new message type
+        if (!is_null($message_type)) {
+            $this->load($message_type);
+        } else {
+            $this->loadConfigType('default');
         }
+
+        return $this;
+    }
+
+
+    /**
+     * Load Message Type
+     *
+     * @param $message_type (set in config file)
+     * @return $this
+     */
+    public function load($message_type)
+    {
+        $this->loadConfigType($message_type);
 
         return $this;
     }
@@ -368,13 +381,25 @@ abstract class MessageAbstract
     private function setConfigOption($option_type, $option_value)
     {
         if (!method_exists($this, $option_type)) {
-            //Log::warning('Pigeon Invalid Configuration Option '.$option_type);
             return false;
         }
 
         $this->$option_type($option_value);
 
         return true;
+    }
+
+    /**
+     * Reset Message Properties to empty
+     */
+    private function resetMessage()
+    {
+        $this->message_type = '';
+        $this->to = [];
+        $this->cc = [];
+        $this->bcc = [];
+        $this->attachments = [];
+        $this->message_layout->clearVariables();
     }
 
     /**
