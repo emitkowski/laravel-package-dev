@@ -1,5 +1,4 @@
 /.idea
-/public/pigeon
 /vendor
 /node_modules
 .env*
