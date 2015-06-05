@@ -42,7 +42,7 @@ Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
     'billing' => 'Examples\BillingController',
-    'mailer' => 'Examples\MailerController',
+    'pigeon' => 'Examples\PigeonController',
     'test' => 'Examples\TestController'
 ]);
 
