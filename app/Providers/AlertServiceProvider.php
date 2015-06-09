@@ -1,8 +1,9 @@
-<?php namespace App\Providers;
+<?php
+
+namespace App\Providers;
 
 use App\Services\Support\Alert;
 use Illuminate\Support\ServiceProvider;
-
 
 class AlertServiceProvider extends ServiceProvider
 {

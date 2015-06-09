@@ -33,15 +33,15 @@ Route::get('info', function() {
  * Frontend Routes
  */
 
-Route::get('/', 'WelcomeController@index');
-Route::get('home', 'HomeController@index');
+Route::get('/', function () {
+    return view('welcome');
+});
 
 
 Route::controllers([
-    'api-test' => 'Auth\AuthController',
+    'api-test' => 'Examples\APITestController',
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
-    'billing' => 'Examples\BillingController',
     'pigeon' => 'Examples\PigeonController',
     'test' => 'Examples\TestController'
 ]);

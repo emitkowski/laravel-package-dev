@@ -1,4 +1,6 @@
-<?php namespace App\Observers\Models;
+<?php
+
+namespace App\Observers\Models;
 
 /**
  * Class DataImportModelObserver

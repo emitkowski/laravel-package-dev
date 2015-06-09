@@ -1,4 +1,6 @@
-<?php namespace App\Repositories\Admin;
+<?php
+
+namespace App\Repositories\Admin;
 
 use App\Repositories\EloquentRepositoryAbstract;
 use Illuminate\Auth\Authenticatable;

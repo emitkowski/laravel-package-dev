@@ -1,19 +1,14 @@
 <?php
 
-namespace App\Repositories\User;
+namespace App;
 
-use App\Repositories\EloquentRepositoryAbstract;
 use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-
-/*
- * This class is the Eloquent Implementation of the User Repository
- */
-
-class UsersEloquent extends EloquentRepositoryAbstract implements UserRepositoryInterface, AuthenticatableContract, CanResetPasswordContract
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
 
@@ -37,14 +32,4 @@ class UsersEloquent extends EloquentRepositoryAbstract implements UserRepository
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-
-    /*
-    * Full Name Attribute Accessor.
-    *
-    * @return Collection
-    */
-    public function getFullNameAttribute()
-    {
-        return $this->first_name.' '.$this->last_name;
-    }
 }

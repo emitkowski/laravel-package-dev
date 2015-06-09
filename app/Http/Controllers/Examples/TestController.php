@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Examples;
+<?php
+
+namespace App\Http\Controllers\Examples;
 
 use App\Services\Support\Alert\Type\WebopsAlert as WebopsAlert;
 use App\Services\Support\Logger\MyLogger as MyLogger;

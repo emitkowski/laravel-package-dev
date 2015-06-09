@@ -1,4 +1,6 @@
-<?php namespace App\Services\Support\Validator\Auth;
+<?php
+
+namespace App\Services\Support\Validator\Auth;
 
 use App\Services\Support\Validator\ValidatorAbstract;
 

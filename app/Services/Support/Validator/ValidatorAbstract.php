@@ -1,4 +1,6 @@
-<?php namespace App\Services\Support\Validator;
+<?php
+
+namespace App\Services\Support\Validator;
 
 use Illuminate\Support\MessageBag as MessageBag;
 

@@ -1,4 +1,6 @@
-<?php namespace App\Services\Support\FileOrganizer;
+<?php
+
+namespace App\Services\Support\FileOrganizer;
 
 use App\Services\Support\Alert\AlertTrait;
 use App\Services\Support\Logger\LoggerTrait;

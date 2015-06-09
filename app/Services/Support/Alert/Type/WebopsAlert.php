@@ -1,4 +1,6 @@
-<?php namespace App\Services\Support\Alert\Type;
+<?php
+
+namespace App\Services\Support\Alert\Type;
 
 use App\Services\Support\Alert\AlertAbstract;
 use App\Services\Support\Mailer\Alert\AlertEmail;

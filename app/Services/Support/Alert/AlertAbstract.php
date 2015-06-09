@@ -1,4 +1,6 @@
-<?php namespace App\Services\Support\Alert;
+<?php
+
+namespace App\Services\Support\Alert;
 
 /**
  * Class AlertAbstract

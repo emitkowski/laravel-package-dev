@@ -1,8 +1,10 @@
-<?php namespace App\Http\Controllers\Examples;
+<?php
+
+namespace App\Http\Controllers\Examples;
 
 use App\Http\Controllers\Controller;
 
-class APIController extends Controller {
+class APITestController extends Controller {
 
 
     /**

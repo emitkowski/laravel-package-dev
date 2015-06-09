@@ -1,4 +1,6 @@
-<?php namespace App\Services\Support\FileOrganizer;
+<?php
+
+namespace App\Services\Support\FileOrganizer;
 
 /**
  * Abstract Class for File Operator

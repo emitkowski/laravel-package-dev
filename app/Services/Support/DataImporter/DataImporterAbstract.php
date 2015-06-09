@@ -1,4 +1,6 @@
-<?php namespace App\Services\Support\DataImporter;
+<?php
+
+namespace App\Services\Support\DataImporter;
 
 use App\Services\Support\Alert\AlertTrait;
 use App\Services\Support\Logger\LoggerTrait;
