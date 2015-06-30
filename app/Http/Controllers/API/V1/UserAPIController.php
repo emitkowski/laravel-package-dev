@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\API\V1;
 
@@ -26,8 +26,8 @@ class UserAPIController extends APIController
     public function index(Request $request)
     {
         $users = $this->repository->findAll($request->input('sort_column') ?: 'created_at',
-                                                $request->input('sort_dir')    ?: 'DESC',
-                                                $request->input('limit')       ?: '100');
+            $request->input('sort_dir') ?: 'DESC',
+            $request->input('limit') ?: '100');
 
         return $this->outputResponse($users);
     }
@@ -43,7 +43,7 @@ class UserAPIController extends APIController
         $user = $this->repository->findById($id);
 
         if (!$user) {
-            return $this->outputErrorResponse(['User Not Found With ID: '. $id]);
+            return $this->outputErrorResponse(['User Not Found With ID: ' . $id]);
         }
 
         return $this->outputResponse($user);
@@ -59,8 +59,7 @@ class UserAPIController extends APIController
     {
         $input = array_except($request->all(), '_method');
 
-        if (!$this->validator->passes())
-        {
+        if (!$this->validator->passes()) {
             $errors = $this->validator->getErrors();
 
             return $this->outputErrorResponse($errors->all());
@@ -105,7 +104,7 @@ class UserAPIController extends APIController
     {
         $count = $this->repository->deleteRow($id);
 
-        return $this->outputResponse($count.' Rows Deleted');
+        return $this->outputResponse($count . ' Rows Deleted');
     }
 
 
@@ -121,7 +120,7 @@ class UserAPIController extends APIController
 
         $users = $this->repository->APIsearch($input);
 
-        if(!is_object($users)) {
+        if (!is_object($users)) {
             return $this->outputErrorResponse($users);
         }
 

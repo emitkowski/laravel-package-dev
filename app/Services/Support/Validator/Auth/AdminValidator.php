@@ -8,8 +8,8 @@ class AdminValidator extends ValidatorAbstract
 {
 
     /**
-    * Validation rules
-    */
+     * Validation rules
+     */
     protected $rules = [
         'email' => 'required|email|exists:admin',
         'password' => 'required'

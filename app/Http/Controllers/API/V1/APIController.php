@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\API\V1;
 
@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-class APIController extends Controller {
+class APIController extends Controller
+{
 
     protected $repository;
     protected $validator;

@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Examples;
 
 use App\Http\Controllers\Controller;
 
-class APITestController extends Controller {
+class APITestController extends Controller
+{
 
 
     /**
@@ -28,10 +29,10 @@ class APITestController extends Controller {
             'first_name' => 'John',
             'last_name' => 'Doe',
             'email' => 'john@doe.com',
-            'address' =>  '123 Main Street',
-            'address2' =>  'Apt 1',
-            'city' =>  'Denver',
-            'state' =>  'CO',
+            'address' => '123 Main Street',
+            'address2' => 'Apt 1',
+            'city' => 'Denver',
+            'state' => 'CO',
             'zip' => '90111',
             'phone' => '555-555-5555'
         );
@@ -51,7 +52,7 @@ class APITestController extends Controller {
         ));
 
         $response = curl_exec($curl);
-        print_r($response.'<br><br>');
+        print_r($response . '<br><br>');
 
         $customer = json_decode($response);
         $customer_id = $customer->customer->id;
@@ -79,12 +80,12 @@ class APITestController extends Controller {
             ),
             CURLOPT_CUSTOMREQUEST => 'PATCH',
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://laravelapi/api/v1/customers/' . $customer_id . '/'. $params
+            CURLOPT_URL => 'http://laravelapi/api/v1/customers/' . $customer_id . '/' . $params
 
         ));
 
         $response = curl_exec($curl);
-        print_r($response.'<br><br>');
+        print_r($response . '<br><br>');
         curl_close($curl);
 
 
@@ -99,13 +100,13 @@ class APITestController extends Controller {
             ),
             CURLOPT_CUSTOMREQUEST => 'DELETE',
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://laravelapi/api/v1/customers/'. $customer_id
+            CURLOPT_URL => 'http://laravelapi/api/v1/customers/' . $customer_id
 
         ));
 
 
         $response = curl_exec($curl);
-        print_r($response.'<br><br>');
+        print_r($response . '<br><br>');
         curl_close($curl);
 
     }

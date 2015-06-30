@@ -97,9 +97,9 @@ abstract class EloquentRepositoryAbstract extends Model implements RepositoryInt
     public function sort($sort_column, $sort_dir = null)
     {
         if (!is_null($sort_dir)) {
-            $this->query->orderBy($sort_column , $sort_dir);
+            $this->query->orderBy($sort_column, $sort_dir);
         } else {
-            $this->query->orderBy($sort_column , 'ASC');
+            $this->query->orderBy($sort_column, 'ASC');
         }
 
         return $this;
@@ -130,10 +130,12 @@ abstract class EloquentRepositoryAbstract extends Model implements RepositoryInt
     {
         $results = $this->query->get();
 
-        if($type == 'array') {
+        if ($type == 'array') {
             $results = $results->toArray();
-        } else if($type == 'json') {
-            $results = $results->toJson();
+        } else {
+            if ($type == 'json') {
+                $results = $results->toJson();
+            }
         }
 
         $this->query = $this->newQuery();
@@ -242,7 +244,7 @@ abstract class EloquentRepositoryAbstract extends Model implements RepositoryInt
         }
 
         if ($sort_column != null && $sort_dir != null) {
-            $query = $query->orderBy($sort_column , $sort_dir);
+            $query = $query->orderBy($sort_column, $sort_dir);
         }
 
         if ($limit != null) {
@@ -271,11 +273,11 @@ abstract class EloquentRepositoryAbstract extends Model implements RepositoryInt
 
         $query = $this;
 
-        if(!empty($include)) {
+        if (!empty($include)) {
             $query = $query->with($include);
         }
 
-        if($fail == true) {
+        if ($fail == true) {
             return $query->findOrFail($id);
         }
 

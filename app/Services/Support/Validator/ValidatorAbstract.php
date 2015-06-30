@@ -23,7 +23,7 @@ abstract class ValidatorAbstract implements ValidatorInterface
      * @param array $input
      * @param \Illuminate\Support\MessageBag $bag
      */
-    public function __construct($input = NULL, MessageBag $bag)
+    public function __construct($input = null, MessageBag $bag)
     {
         $this->input = $input ?: \Request::all();
 
@@ -66,7 +66,7 @@ abstract class ValidatorAbstract implements ValidatorInterface
      */
     public function addError($key, $message)
     {
-       return $this->errors->add($key, $message);
+        return $this->errors->add($key, $message);
     }
 
 }

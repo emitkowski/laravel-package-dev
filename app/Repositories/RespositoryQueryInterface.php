@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 /**
  * Interface RepositoryQueryInterface
+ *
  * @package App\Repositories
  */
 interface RepositoryQueryInterface

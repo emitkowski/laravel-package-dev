@@ -8,6 +8,7 @@ use Monolog\Handler\StreamHandler;
 
 /**
  * Class MyLogger
+ *
  * @package App\Services\Logger
  *
  * Log Class to write general individual log files
@@ -28,8 +29,8 @@ class MyLogger implements LoggerInterface
      */
     public function __construct()
     {
-        $this->all_logs_enabled = (bool) config('support.logger.enabled.all_logs');
-        $this->global_error_log_enabled = (bool) config('support.logger.enabled.global_error_log');
+        $this->all_logs_enabled = (bool)config('support.logger.enabled.all_logs');
+        $this->global_error_log_enabled = (bool)config('support.logger.enabled.global_error_log');
     }
 
     /**
@@ -42,9 +43,9 @@ class MyLogger implements LoggerInterface
      * @param null $log_name
      * @return bool
      */
-    public function write($message, $service_name, $is_support=true, $level='info', $log_name=null)
+    public function write($message, $service_name, $is_support = true, $level = 'info', $log_name = null)
     {
-        if($this->all_logs_enabled) {
+        if ($this->all_logs_enabled) {
 
             $log_event = \App::make('log_event_time');
 

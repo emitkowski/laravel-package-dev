@@ -4,6 +4,7 @@ namespace App\Services\Support\Logger;
 
 /**
  * Class LoggerTrait
+ *
  * @package App\Services\Logger
  *
  * Trait to add logging functionality to any class
@@ -20,7 +21,7 @@ trait LoggerTrait
      * @param null $log_name
      * @return bool
      */
-    protected function logInfo($message, $log_name=null)
+    protected function logInfo($message, $log_name = null)
     {
         try {
             if ($this->getServiceType() == 'support') {
@@ -29,8 +30,8 @@ trait LoggerTrait
                 \Logger::write($message, $this->getServiceName(), false, 'info', $log_name);
             }
 
-        } catch(\Exception $e) {
-            \Logger::write('Logger Error:'.$e->getMessage(), 'logger', true, 'error');
+        } catch (\Exception $e) {
+            \Logger::write('Logger Error:' . $e->getMessage(), 'logger', true, 'error');
         }
 
         return true;
@@ -43,7 +44,7 @@ trait LoggerTrait
      * @param null $log_name
      * @return bool
      */
-    protected function logWarning($message, $log_name=null)
+    protected function logWarning($message, $log_name = null)
     {
         try {
             if ($this->getServiceType() == 'support') {
@@ -51,8 +52,8 @@ trait LoggerTrait
             } else {
                 \Logger::write($message, $this->getServiceName(), false, 'warning', $log_name);
             }
-        } catch(\Exception $e) {
-            \Logger::write('Logger Error:'.$e->getMessage(), 'logger', true, 'error');
+        } catch (\Exception $e) {
+            \Logger::write('Logger Error:' . $e->getMessage(), 'logger', true, 'error');
         }
 
         return true;
@@ -66,7 +67,7 @@ trait LoggerTrait
      * @param null $log_name
      * @return bool
      */
-    protected function logError($message, $log_name=null)
+    protected function logError($message, $log_name = null)
     {
         try {
             if ($this->getServiceType() == 'support') {
@@ -74,8 +75,8 @@ trait LoggerTrait
             } else {
                 \Logger::write($message, $this->getServiceName(), false, 'error', $log_name);
             }
-        } catch(\Exception $e) {
-            \Logger::write('Logger Error:'.$e->getMessage(), 'logger', true, 'error');
+        } catch (\Exception $e) {
+            \Logger::write('Logger Error:' . $e->getMessage(), 'logger', true, 'error');
         }
 
         return true;
@@ -89,9 +90,10 @@ trait LoggerTrait
      */
     protected function getServiceName()
     {
-        if (!isset($this->service_name)){
-            throw new \Exception("Service Name not set in class:". get_called_class());
+        if (!isset($this->service_name)) {
+            throw new \Exception("Service Name not set in class:" . get_called_class());
         }
+
         return strtolower($this->service_name);
     }
 
@@ -116,9 +118,10 @@ trait LoggerTrait
      */
     protected function getServiceType()
     {
-        if (!isset($this->service_type)){
-            throw new \Exception("Service Type not set in class:". get_called_class());
+        if (!isset($this->service_type)) {
+            throw new \Exception("Service Type not set in class:" . get_called_class());
         }
+
         return strtolower($this->service_type);
     }
 

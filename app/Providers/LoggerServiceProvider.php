@@ -17,8 +17,7 @@ class LoggerServiceProvider extends ServiceProvider
         $app = $this->app;
 
         /**** Logger Binding ***/
-        $app->bind('logger', function()
-        {
+        $app->bind('logger', function () {
             return new Logger\MyLogger();
         });
     }

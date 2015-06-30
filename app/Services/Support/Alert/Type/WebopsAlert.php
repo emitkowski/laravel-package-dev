@@ -7,6 +7,7 @@ use App\Services\Support\Mailer\Alert\AlertEmail;
 
 /**
  * Class WebopsAlert
+ *
  * @package App\Services\Support\Alert\Type
  */
 class WebopsAlert extends AlertAbstract
@@ -40,9 +41,10 @@ class WebopsAlert extends AlertAbstract
      * @param null $contacts
      * @return mixed
      */
-    public function alert($subject, $message, $alert_level=null, $contacts=null)
+    public function alert($subject, $message, $alert_level = null, $contacts = null)
     {
-        parent::emailAlert($this->subject_header .' '. $this->alert_level . ': ' . $subject, $message, $alert_level, $contacts);
+        parent::emailAlert($this->subject_header . ' ' . $this->alert_level . ': ' . $subject, $message, $alert_level,
+            $contacts);
     }
 
 }

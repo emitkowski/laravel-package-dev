@@ -20,13 +20,13 @@ class UserTableSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         // Run Seed
-        for($i = 0; $i < $this->seed_number; $i++) {
+        for ($i = 0; $i < $this->seed_number; $i++) {
             $users_repo->createRow([
                 'email' => $faker->email,
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'zip_code' => $faker->postcode,
-                'confirmed' => $faker->numberBetween(0,1),
+                'confirmed' => $faker->numberBetween(0, 1),
             ]);
         }
 

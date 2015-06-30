@@ -18,18 +18,15 @@ class RepositoryServiceProvider extends ServiceProvider
         $app = $this->app;
 
         /**** Admin Repository ***/
-        $app->bind('AdminRepositoryEloquent', function()
-        {
+        $app->bind('AdminRepositoryEloquent', function () {
             return new Repositories\Admin\AdminRepositoryEloquent;
         });
         // Choose Binding
         $app->bind('App\Repositories\Admin\AdminRepositoryInterface', 'AdminRepositoryEloquent');
 
 
-
         /**** User Repository ***/
-        $app->bind('UserRepositoryEloquent', function()
-        {
+        $app->bind('UserRepositoryEloquent', function () {
             return new Repositories\User\UserRepositoryEloquent;
         });
         // Choose Binding

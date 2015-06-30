@@ -7,7 +7,8 @@ use Illuminate\Routing\Controller;
 use App\Repositories\User\UserRepositoryInterface as UserRepositoryInterface;
 use App\Services\Validator\User\EditValidator;
 
-class UserAdminController extends Controller {
+class UserAdminController extends Controller
+{
 
     /**
      * User Repository
@@ -53,8 +54,7 @@ class UserAdminController extends Controller {
         $input = Input::all();
         $validation = Validator::make($input, User::$rules);
 
-        if($validation->passes())
-        {
+        if ($validation->passes()) {
             $this->user_repo->createRow($input);
 
             return Redirect::route('Admin::users.index');
@@ -69,7 +69,7 @@ class UserAdminController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function show($id)
@@ -82,15 +82,14 @@ class UserAdminController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function edit($id)
     {
         $user = $this->user_repo->findById($id);
 
-        if(is_null($user))
-        {
+        if (is_null($user)) {
             return Redirect::route('Admin::users.index');
         }
 
@@ -100,15 +99,14 @@ class UserAdminController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function update($id)
     {
         $input = array_except(Input::all(), '_method');
 
-        if($this->user_edit_validator->passes())
-        {
+        if ($this->user_edit_validator->passes()) {
             $user = $this->user_repo->findById($id);
             $user->updateRow($input);
 

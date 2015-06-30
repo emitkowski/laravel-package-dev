@@ -3,9 +3,9 @@
 /*
  * Debug echo function
  */
-function er($input, $die=0)
+function er($input, $die = 0)
 {
-    echo($input.'<br />');
+    echo($input . '<br />');
 
     if ($die) {
         die();
@@ -15,7 +15,7 @@ function er($input, $die=0)
 /*
  * Debug print function
  */
-function pr($input, $die=0)
+function pr($input, $die = 0)
 {
     echo '<pre>';
     print_r($input);
@@ -29,7 +29,7 @@ function pr($input, $die=0)
 /*
  * XDebug var_dump function
  */
-function xr($input, $die=0)
+function xr($input, $die = 0)
 {
     xdebug_var_dump($input);
 

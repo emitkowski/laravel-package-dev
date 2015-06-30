@@ -7,7 +7,8 @@ use App\Services\Support\Logger\MyLogger as MyLogger;
 use Illuminate\Routing\Controller;
 use TestPackage\Test;
 
-class TestController extends Controller {
+class TestController extends Controller
+{
 
     /*
     |--------------------------------------------------------------------------
@@ -53,6 +54,7 @@ class TestController extends Controller {
 
     /**
      *  Test Alert Service
+     *
      * @param WebopsAlert $alert_service
      * @internal param WebopsAlert $alert
      */
@@ -64,6 +66,7 @@ class TestController extends Controller {
 
     /**
      *  Test Logger Service
+     *
      * @param MyLogger $logger
      */
     public function getLogger(MyLogger $logger)

@@ -17,9 +17,9 @@ class AlertServiceProvider extends ServiceProvider
         $app = $this->app;
 
         /**** Webops Alert Binding ***/
-        $app->bind('WebopsAlert', function()
-        {
+        $app->bind('WebopsAlert', function () {
             $alert_mailer = \App::make('App\Services\Support\Mailer\Alert\AlertEmail');
+
             return new Alert\Type\WebopsAlert($alert_mailer);
         });
     }

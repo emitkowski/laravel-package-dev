@@ -4,6 +4,7 @@ namespace App\Services\Support\Alert;
 
 /**
  * Class AlertAbstract
+ *
  * @package App\Services\Support\Alert
  *
  * This class defines the abstract Alert Service
@@ -29,8 +30,8 @@ abstract class AlertAbstract
      */
     public function __construct()
     {
-        $this->email_enabled = (bool) config('support.alert.enabled.email');
-        $this->text_enabled = (bool) config('support.alert.enabled.text');
+        $this->email_enabled = (bool)config('support.alert.enabled.email');
+        $this->text_enabled = (bool)config('support.alert.enabled.text');
     }
 
     /**
@@ -42,7 +43,7 @@ abstract class AlertAbstract
      * @param $contacts
      * @return
      */
-    abstract public function alert($subject, $message, $alert_level=null, $contacts=null);
+    abstract public function alert($subject, $message, $alert_level = null, $contacts = null);
 
     /**
      * Send Alert Email
@@ -53,10 +54,10 @@ abstract class AlertAbstract
      * @param null $contacts
      * @return bool
      */
-    protected function emailAlert($subject, $message, $alert_level=null, $contacts=null)
+    protected function emailAlert($subject, $message, $alert_level = null, $contacts = null)
     {
         // Check if email enabled
-        if($this->email_enabled) {
+        if ($this->email_enabled) {
 
             // Check for optional email override
             /*if (is_array($contacts)) {
@@ -88,11 +89,10 @@ abstract class AlertAbstract
      * @param null $contacts
      * @return bool
      */
-    protected function textAlert($message, $alert_level=null, $contacts=null)
+    protected function textAlert($message, $alert_level = null, $contacts = null)
     {
         return true;
     }
-
 
 
 }

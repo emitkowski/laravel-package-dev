@@ -44,12 +44,12 @@ abstract class FileOrganizerAbstract
     public function __construct()
     {
         // Build File Paths in Storage
-        $this->storage_main_path = storage_path().'/app/'.$this->storage_root.'/'.$this->storage_specific_dir;
-        $this->archive_path = $this->storage_main_path.'/'.$this->default_archive_dir.'/';
-        $this->current_path = $this->storage_main_path.'/'.$this->default_current_dir.'/';
-        $this->working_path = $this->storage_main_path.'/'.$this->default_working_dir.'/';
-        $this->failed_path = $this->storage_main_path.'/'.$this->default_failed_dir.'/';
-        $this->transfer_retry_path = $this->storage_main_path.'/'.$this->default_transfer_retry_dir.'/';
+        $this->storage_main_path = storage_path() . '/app/' . $this->storage_root . '/' . $this->storage_specific_dir;
+        $this->archive_path = $this->storage_main_path . '/' . $this->default_archive_dir . '/';
+        $this->current_path = $this->storage_main_path . '/' . $this->default_current_dir . '/';
+        $this->working_path = $this->storage_main_path . '/' . $this->default_working_dir . '/';
+        $this->failed_path = $this->storage_main_path . '/' . $this->default_failed_dir . '/';
+        $this->transfer_retry_path = $this->storage_main_path . '/' . $this->default_transfer_retry_dir . '/';
     }
 
     /**
@@ -61,10 +61,10 @@ abstract class FileOrganizerAbstract
      */
     protected function cleanFile($filename, $string)
     {
-        $data = file_get_contents($this->working_path.$filename);
-        $data = preg_replace('/'.$string.'/', '$1', $data);
+        $data = file_get_contents($this->working_path . $filename);
+        $data = preg_replace('/' . $string . '/', '$1', $data);
 
-        if (file_put_contents($this->working_path.$filename, $data) === false) {
+        if (file_put_contents($this->working_path . $filename, $data) === false) {
             return false;
         }
 
@@ -84,7 +84,7 @@ abstract class FileOrganizerAbstract
         }
 
         return rename($this->working_path . $file,
-                $this->archive_path . $file . '_' . date($this->archive_timestamp_format));
+            $this->archive_path . $file . '_' . date($this->archive_timestamp_format));
     }
 
     /**
@@ -111,14 +111,14 @@ abstract class FileOrganizerAbstract
      */
     protected function publicizeFile($file)
     {
-        if (!file_exists($this->working_path.$file)) {
+        if (!file_exists($this->working_path . $file)) {
             return false;
         }
 
         // If retry folder has same file, erase it
         if (isset($this->transfer_type) && $this->transfer_type == 'FTP') {
-            if (file_exists($this->transfer_retry_path.$file)) {
-                unlink($this->transfer_retry_path.$file);
+            if (file_exists($this->transfer_retry_path . $file)) {
+                unlink($this->transfer_retry_path . $file);
             }
         }
 
@@ -154,7 +154,7 @@ abstract class FileOrganizerAbstract
     private function makeDir($path)
     {
         if (!is_dir($path)) {
-            mkdir($path, $mode=0775, true);
+            mkdir($path, $mode = 0775, true);
         }
     }
 
@@ -191,19 +191,22 @@ abstract class FileOrganizerAbstract
         foreach ($mapper->strings_to_clean as $string) {
             if (!$this->cleanFile($mapper->file_name, $string)) {
                 $this->logError($mapper->file_name . ': Failed to Clean');
+
                 return false;
             }
         }
 
         // Publicize File
         if (!$this->publicizeFile($mapper->file_name)) {
-            $this->logError($mapper->file_name.': Failed to Publicize');
+            $this->logError($mapper->file_name . ': Failed to Publicize');
+
             return false;
         }
 
         // Archive File
         if (!$this->archiveFile($mapper->file_name)) {
-            $this->logError($mapper->file_name.': Failed to Archive');
+            $this->logError($mapper->file_name . ': Failed to Archive');
+
             return false;
         }
 
@@ -242,7 +245,8 @@ abstract class FileOrganizerAbstract
     {
         // Error File
         if (!$this->failFile($mapper->file_name)) {
-            $this->logError($mapper->file_name.': Failed to Error');
+            $this->logError($mapper->file_name . ': Failed to Error');
+
             return false;
         }
 

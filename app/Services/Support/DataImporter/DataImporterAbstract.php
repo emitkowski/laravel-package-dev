@@ -33,7 +33,8 @@ abstract class DataImporterAbstract
      *
      */
     public function __construct()
-    {}
+    {
+    }
 
     /**
      * Import Data from source to repository
@@ -47,8 +48,10 @@ abstract class DataImporterAbstract
 
         // Alert Webops import has failed
         if ($result === false) {
-            $this->logError($this->service_name.' Failure: The '.$this->service_name.' process did not complete.');
-            $this->webopsAlert($this->service_name.' Failure', 'The '.$this->service_name.' process did not complete. Please check the Magento API connection and Data Importer logs to detect the issue.');
+            $this->logError($this->service_name . ' Failure: The ' . $this->service_name . ' process did not complete.');
+            $this->webopsAlert($this->service_name . ' Failure',
+                'The ' . $this->service_name . ' process did not complete. Please check the Magento API connection and Data Importer logs to detect the issue.');
+
             return false;
         }
 
@@ -90,18 +93,18 @@ abstract class DataImporterAbstract
      */
     private function logStats()
     {
-        $stat_log = 'Data Processed #: '.$this->import_data_processed;
+        $stat_log = 'Data Processed #: ' . $this->import_data_processed;
 
         // Log activity
-        if($this->is_created && session()->get('data_import_created_count') > 0) {
+        if ($this->is_created && session()->get('data_import_created_count') > 0) {
             $stat_log .= ' | Created #: ' . session()->get('data_import_created_count');
         }
 
-        if($this->is_updated && session()->get('data_import_updated_count') > 0) {
+        if ($this->is_updated && session()->get('data_import_updated_count') > 0) {
             $stat_log .= ' | Updated #: ' . session()->get('data_import_updated_count');
         }
 
-        if($this->is_deleted && session()->get('data_import_deleted_count') > 0) {
+        if ($this->is_deleted && session()->get('data_import_deleted_count') > 0) {
             $stat_log .= ' | Deleted #: ' . session()->get('data_import_deleted_count');
         }
 

@@ -16,13 +16,12 @@
  */
 
 // Environment Detection
-Route::get('env', function()
-{
-	dd(App::environment());
+Route::get('env', function () {
+    dd(App::environment());
 });
 
 // PHP Info
-Route::get('info', function() {
+Route::get('info', function () {
     if (App::environment() != 'production') {
         phpinfo();
     }
@@ -49,7 +48,7 @@ Route::controllers([
 /*
  *  API Routes
  */
-Route::group(['prefix' => 'api'], function() {
+Route::group(['prefix' => 'api'], function () {
 
     Route::get('/user/search', array('uses' => 'API\V1\UserAPIController@search'));
 
@@ -63,16 +62,14 @@ Route::group(['prefix' => 'api'], function() {
  *  Admin Routes
  */
 
-Route::group(array('prefix' => 'admin'), function()
-{
-	Route::any('login', array('as' => 'adminlogin', 'uses' => 'Admin\AuthAdminController@adminLogin'))->before('guest');
+Route::group(array('prefix' => 'admin'), function () {
+    Route::any('login', array('as' => 'adminlogin', 'uses' => 'Admin\AuthAdminController@adminLogin'))->before('guest');
 
-	Route::group(array('before' => 'auth'), function()
-	{
-		Route::any('/', array('as' => 'adminhome', 'uses' => 'Admin\UserAdminController@index'));
+    Route::group(array('before' => 'auth'), function () {
+        Route::any('/', array('as' => 'adminhome', 'uses' => 'Admin\UserAdminController@index'));
 
-		// Logout Route
-		Route::any('logout', array('as' => 'adminlogout', 'uses' => 'Admin\AuthAdminController@adminLogout'));
+        // Logout Route
+        Route::any('logout', array('as' => 'adminlogout', 'uses' => 'Admin\AuthAdminController@adminLogout'));
 
-	});
+    });
 });
