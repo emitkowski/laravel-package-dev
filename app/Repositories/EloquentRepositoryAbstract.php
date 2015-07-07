@@ -25,10 +25,13 @@ abstract class EloquentRepositoryAbstract extends Model implements RepositoryInt
     /**
      * Repository Abstract Constructor
      *
+     * @param array $attributes
      */
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
         $this->query = $this->newQuery();
+
+        parent::__construct($attributes);
     }
 
 
